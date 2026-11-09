@@ -1,10 +1,10 @@
-# iOS Development Portfolio
+# Mobile Development Portfolio
 
 A curated set of **five fully functional mobile apps** — SwiftUI (iOS) and Kotlin/Jetpack Compose (Android) — that demonstrate the core pillars of modern mobile development. Built for interview conversations: each app is shippable demo quality, opens cleanly in Xcode, and maps to a clear technical narrative.
 
 **Author:** Jian Wang  
 **Platforms:** iOS 17+ · Swift 5.9+ · SwiftUI  ·  Android 8+ (API 26) · Kotlin · Jetpack Compose  
-**Repo:** [wjdartmouth/ios-dev-portfolio](https://github.com/wjdartmouth/ios-dev-portfolio)
+**Repo:** [wjdartmouth/mobile-dev-portfolio](https://github.com/wjdartmouth/mobile-dev-portfolio)
 
 ---
 
