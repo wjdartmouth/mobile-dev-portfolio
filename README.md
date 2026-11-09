@@ -1,9 +1,9 @@
 # iOS Development Portfolio
 
-A curated set of **five fully functional SwiftUI apps** that demonstrate the core pillars of modern iOS development. Built for interview conversations: each app is shippable demo quality, opens cleanly in Xcode, and maps to a clear technical narrative.
+A curated set of **five fully functional mobile apps** — SwiftUI (iOS) and Kotlin/Jetpack Compose (Android) — that demonstrate the core pillars of modern mobile development. Built for interview conversations: each app is shippable demo quality, opens cleanly in Xcode, and maps to a clear technical narrative.
 
 **Author:** Jian Wang  
-**Platform:** iOS 17+ · Swift 5.9+ · SwiftUI  
+**Platforms:** iOS 17+ · Swift 5.9+ · SwiftUI  ·  Android 8+ (API 26) · Kotlin · Jetpack Compose  
 **Repo:** [wjdartmouth/ios-dev-portfolio](https://github.com/wjdartmouth/ios-dev-portfolio)
 
 ---
@@ -70,18 +70,45 @@ Deployment target for every app: **iOS 17.0**.
 Each app folder has its own `README.md` covering features, architecture, run steps, and known limitations (signing, CloudKit, widgets).
 
 ```
-Apps/
-  FocusTimer/     # timer · charts · notifications · widgets · Live Activity
-  SpotJournal/    # camera · map · SwiftData · location
-  PulseWeather/   # Open-Meteo · offline cache · search
-  LedgerLite/     # SwiftData · charts · CSV · a11y
-  SyncNotes/      # CloudKit-ready · local fallback · conflict notes
+Apps/                 # iOS (SwiftUI) — XcodeGen project.yml per app
+  FocusTimer/
+  SpotJournal/
+  PulseWeather/
+  LedgerLite/
+  SyncNotes/
+Android/              # Android (Compose) — standalone Gradle projects
+  FocusTimer/
+  SpotJournal/
+  PulseWeather/
+  LedgerLite/
+  SyncNotes/
 docs/
   architecture.md
 ```
 
 ---
 
+
+## Android apps
+
+Kotlin + Jetpack Compose counterparts live under [`Android/`](Android/). Each app is a standalone Gradle project:
+
+| App | Open in Android Studio |
+|-----|------------------------|
+| **Focus Timer** | `Android/FocusTimer` |
+| **Spot Journal** | `Android/SpotJournal` |
+| **Pulse Weather** | `Android/PulseWeather` |
+| **Ledger Lite** | `Android/LedgerLite` |
+| **Sync Notes** | `Android/SyncNotes` |
+
+```bash
+cd Android/FocusTimer
+./gradlew :app:assembleDebug
+```
+
+See [Android/README.md](Android/README.md) for the Android tech matrix and Firebase enable steps (Sync Notes).
+
+---
 ## Design principles
 
 - **MVVM** with observable view models (`@Observable` / `ObservableObject` as appropriate).

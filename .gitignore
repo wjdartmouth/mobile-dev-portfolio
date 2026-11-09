@@ -30,3 +30,23 @@ xcuserdata/
 # IDE
 .idea/
 .vscode/
+
+# Android / Gradle
+local.properties
+.gradle/
+**/build/
+*.apk
+*.aab
+*.ap_
+*.dex
+.cxx/
+captures/
+*.iml
+.idea/
+google-services.json
+**/google-services.json
+*.jks
+*.keystore
+.DS_Store
+.java.env
+.kotlin/
