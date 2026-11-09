@@ -1,0 +1,32 @@
+# Xcode
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# XcodeGen
+# Keep project.yml; ignore generated projects if regenerating locally
+# *.xcodeproj/  # committed only if generated — we ship yml only
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Swift PM
+.build/
+.swiftpm/
+
+# Temp / export
+*.csv
+*.tmp
+
+# IDE
+.idea/
+.vscode/

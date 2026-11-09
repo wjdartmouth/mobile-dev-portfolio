@@ -1,0 +1,40 @@
+name: SpotJournal
+options:
+  bundleIdPrefix: com.jianwang.portfolio
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  SpotJournal:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    resources:
+      - path: Resources/Assets.xcassets
+    info:
+      path: Resources/Info.plist
+      properties:
+        UILaunchScreen: {}
+        NSCameraUsageDescription: Spot Journal needs the camera to attach photos to journal entries.
+        NSPhotoLibraryUsageDescription: Spot Journal lets you pick photos from your library for journal entries.
+        NSLocationWhenInUseUsageDescription: Spot Journal uses your location to pin journal entries on the map.
+        NSLocationAlwaysAndWhenInUseUsageDescription: Spot Journal uses your location to pin journal entries on the map.
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.spotjournal
+        INFOPLIST_KEY_CFBundleDisplayName: Spot Journal
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+schemes:
+  SpotJournal:
+    build:
+      targets:
+        SpotJournal: all
+    run:
+      config: Debug
