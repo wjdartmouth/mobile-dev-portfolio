@@ -1,50 +1,134 @@
 # Mobile Development Portfolio
 
-A curated set of **five fully functional mobile apps** — SwiftUI (iOS) and Kotlin/Jetpack Compose (Android) — that demonstrate the core pillars of modern mobile development. Built for interview conversations: each app is shippable demo quality, opens cleanly in Xcode, and maps to a clear technical narrative.
-
 **Author:** Jian Wang  
-**Platforms:** iOS 17+ · Swift 5.9+ · SwiftUI  ·  Android 8+ (API 26) · Kotlin · Jetpack Compose  
-**Repo:** [wjdartmouth/mobile-dev-portfolio](https://github.com/wjdartmouth/mobile-dev-portfolio)
+**Goal:** Mid-level mobile developer roles in Japan (applications from ~May 2027)  
+**Readiness target:** Interview-ready by **March 2027**  
+**Repo:** [wjdartmouth/mobile-dev-portfolio](https://github.com/wjdartmouth/mobile-dev-portfolio)  
+**License:** MIT
+
+Five production-shaped apps, each implemented on **iOS (SwiftUI)** and **Android (Jetpack Compose)**. This is not a collection of weekend toys — it is a deliberate portfolio for hiring conversations: real persistence, real networking, explicit error/empty/loading states, widgets where they earn their place, and architecture you can defend in an interview.
+
+---
+
+## 採用担当向けサマリー（日本語）
+
+| 項目 | 内容 |
+|------|------|
+| **目的** | 日本のミドルレベル向けモバイルエンジニア職（目安: 2027年5月頃から応募） |
+| **準備完了目標** | **2027年3月**までに面接で語れる完成度 |
+| **構成** | 同一コンセプトのアプリを **iOS 5本 + Android 5本**（計10プロジェクト） |
+| **技術** | iOS: Swift / SwiftUI / SwiftData / WidgetKit など · Android: Kotlin / Compose / Room / Glance など |
+| **方針** | デモ止まりではなく、永続化・同期・オフライン・アクセシビリティ・テスト／CI まで段階的に厚くする |
+| **ロードマップ** | 詳細は [ROADMAP.md](ROADMAP.md)（2026年11月 → 2027年3月） |
+
+コードをそのままクローンして Xcode / Android Studio で動かせます。CloudKit・Firebase・実機署名など環境依存の部分は各 README に正直に書いてあります。
+
+---
+
+## Who this is for / career goal
+
+| | |
+|--|--|
+| **Audience** | Recruiters and hiring engineers evaluating mid-level mobile candidates in Japan |
+| **Career target** | Mid-level iOS / Android / cross-platform mobile roles (May 2027 applications) |
+| **Portfolio deadline** | Feature freeze + screenshots + interview notes by **March 2027** |
+| **Languages** | Product UIs trending bilingual (EN + JA strings); docs English-primary with JP hiring summary |
+
+This repo exists so a hiring manager can open it, run an app in under 15 minutes, and have a concrete technical conversation — not a slide deck of screenshots alone.
+
+---
+
+## Portfolio philosophy
+
+1. **Depth over quantity** — Five paired apps beat fifteen half-finished demos. Each app owns a clear pillar (widgets, maps/media, networking, structured data, sync).
+2. **Production patterns** — MVVM, protocol-backed services, offline-first where it matters, loading / empty / error UI, privacy strings, no hardcoded API secrets.
+3. **Parity with intent** — iOS and Android share product intent; implementations use platform-idiomatic APIs (SwiftData vs Room, WidgetKit vs Glance, CloudKit vs optional Firestore).
+4. **Honest limitations** — Signing, CloudKit containers, Firebase `google-services.json`, and missing app icons are documented instead of papered over.
+5. **Continuous sophistication** — From Nov 2026 → Mar 2027 the weekly cadence hardens tests, CI, a11y, localization, and one additional sophisticated app (see [ROADMAP.md](ROADMAP.md)).
 
 ---
 
 ## Apps at a glance
 
-| App | One-liner | Open in Xcode |
-|-----|-----------|---------------|
-| **Focus Timer** | Pomodoro timer with history charts, notifications, and WidgetKit | `Apps/FocusTimer` |
-| **Spot Journal** | Photo + note + map-pin journal with location | `Apps/SpotJournal` |
-| **Pulse Weather** | Current + forecast weather via Open-Meteo (no API key) | `Apps/PulseWeather` |
-| **Ledger Lite** | Expense tracker with SwiftData, charts, and CSV export | `Apps/LedgerLite` |
-| **Sync Notes** | Notes with CloudKit-ready sync + local fallback | `Apps/SyncNotes` |
+| App | Product pitch | iOS (SwiftUI) | Android (Compose) |
+|-----|---------------|---------------|-------------------|
+| **Focus Timer** | Pomodoro timer with history charts, notifications, home/lock widgets | [`Apps/FocusTimer`](Apps/FocusTimer) | [`Android/FocusTimer`](Android/FocusTimer) |
+| **Spot Journal** | Photo + short note + map pin journal | [`Apps/SpotJournal`](Apps/SpotJournal) | [`Android/SpotJournal`](Android/SpotJournal) |
+| **Pulse Weather** | Current + forecast weather (Open-Meteo, no API key) | [`Apps/PulseWeather`](Apps/PulseWeather) | [`Android/PulseWeather`](Android/PulseWeather) |
+| **Ledger Lite** | Personal expense tracker with filters, charts, CSV export | [`Apps/LedgerLite`](Apps/LedgerLite) | [`Android/LedgerLite`](Android/LedgerLite) |
+| **Sync Notes** | Notes with cloud sync path + local-first fallback | [`Apps/SyncNotes`](Apps/SyncNotes) | [`Android/SyncNotes`](Android/SyncNotes) |
+
+Per-app feature READMEs live next to the source (both platforms).
 
 ---
 
-## Tech matrix
+## Full tech matrix
+
+### iOS (Swift 5.9+ · SwiftUI · iOS 17+)
 
 | Capability | Focus Timer | Spot Journal | Pulse Weather | Ledger Lite | Sync Notes |
 |------------|:-----------:|:------------:|:-------------:|:-----------:|:----------:|
 | SwiftUI + MVVM | ✅ | ✅ | ✅ | ✅ | ✅ |
-| SwiftData / persistence | ✅ | ✅ SwiftData | ✅ cache | ✅ SwiftData | ✅ + CloudKit |
+| SwiftData / local persistence | ✅ | ✅ | cache files | ✅ | ✅ |
 | async/await networking | | | ✅ Open-Meteo | | |
-| MapKit + CoreLocation | | ✅ | ✅ | | |
+| MapKit + CoreLocation | | ✅ | ✅ geocode | | |
 | Camera / PhotosPicker | | ✅ | | | |
-| WidgetKit (Home/Lock) | ✅ | | | | |
+| WidgetKit (Home / Lock) | ✅ | | | | |
 | ActivityKit Live Activity | ✅ | | | | |
 | Local notifications | ✅ | | | | |
-| Charts (Swift Charts) | ✅ | | ✅ | ✅ | |
-| CSV / file export | | | | ✅ | |
-| Accessibility | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Swift Charts | ✅ | | ✅ | ✅ | |
+| CSV / share sheet export | | | | ✅ | |
 | CloudKit sync layer | | | | | ✅ |
-| Dark Mode | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Accessibility + Dark Mode | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+### Android (Kotlin · Jetpack Compose · minSdk 26 · targetSdk 34)
+
+| Capability | Focus Timer | Spot Journal | Pulse Weather | Ledger Lite | Sync Notes |
+|------------|:-----------:|:------------:|:-------------:|:-----------:|:----------:|
+| Compose + MVVM (ViewModel) | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Room + DataStore | ✅ | ✅ | cache | ✅ | ✅ |
+| OkHttp / kotlinx serialization networking | | | ✅ Open-Meteo | | |
+| Location + OSM / Leaflet map (no Maps API key) | | ✅ | | | |
+| Camera / photo picker | | ✅ | | | |
+| Glance app widget | ✅ | | | | |
+| Notifications | ✅ | | | | |
+| Charts (Compose canvas / custom) | ✅ | | ✅ | ✅ | |
+| CSV share via Intent | | | | ✅ | |
+| Optional Firestore sync | | | | | ✅ (off by default) |
+| Material 3 + contentDescriptions | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+Cross-cutting details: [docs/architecture.md](docs/architecture.md).
 
 ---
 
-## How to open a project
+## Architecture notes
 
-### Option A — XcodeGen (recommended)
+Shared shape on both platforms:
 
-Each app ships a `project.yml`. On a Mac with [XcodeGen](https://github.com/yonaskolb/XcodeGen) installed:
+```
+App entry → ViewModels → Services (protocols) → Persistence / Network
+                ↓
+              Views (SwiftUI / Compose)
+```
+
+| Concern | iOS approach | Android approach |
+|---------|--------------|------------------|
+| UI state | `@Observable` / `ObservableObject` | `ViewModel` + `StateFlow` / Compose state |
+| Persistence | SwiftData, JSON file cache, UserDefaults / App Group | Room, DataStore, file cache |
+| Networking | `URLSession` + async/await | OkHttp + coroutines |
+| Sync | CloudKit-ready protocol + local fallback (Sync Notes) | Room always; Firestore optional flag |
+| Widgets | WidgetKit + ActivityKit (Focus Timer) | Glance (Focus Timer) |
+| DI / testability | Protocol-backed services for fakes & previews | Interfaces + ViewModel injection |
+
+Interview angle: explain *why* Pulse Weather uses a file cache instead of SwiftData/Room, and *why* Sync Notes stays usable with cloud disabled.
+
+---
+
+## How to open & run
+
+### iOS (Mac + Xcode 15+)
+
+Each iOS app ships a XcodeGen `project.yml` (no checked-in `.xcodeproj`).
 
 ```bash
 brew install xcodegen
@@ -53,30 +137,88 @@ xcodegen generate
 open *.xcodeproj
 ```
 
-### Option B — Create an Xcode project manually
+1. Select the app scheme.
+2. Set your **Signing Team**.
+3. Run on simulator or device (iOS 17.0+).
+4. Focus Timer widgets: add the Widget extension target to the Home Screen; Live Activities need a capable device/simulator.
+5. Sync Notes CloudKit: enable iCloud + the container in Signing & Capabilities (local mode works without it).
 
-1. Open Xcode → **File → New → Project → App** (SwiftUI, Swift, iOS 17).
-2. Replace the generated `ContentView` / `*App.swift` with the sources under `Sources/`.
-3. Add any `Widgets/` target as a Widget Extension if present.
-4. Copy `Info.plist` privacy keys and entitlements from the app folder.
-5. Add `Assets.xcassets`.
+Manual Xcode project creation is documented in each app README if you prefer not to use XcodeGen.
 
-Deployment target for every app: **iOS 17.0**.
+### Android (Android Studio Hedgehog+ · JDK 17 · SDK 34)
+
+```bash
+cd Android/FocusTimer   # or SpotJournal / PulseWeather / LedgerLite / SyncNotes
+./gradlew :app:assembleDebug
+# APK: app/build/outputs/apk/debug/app-debug.apk
+```
+
+Or **File → Open** the app folder in Android Studio and press Run.  
+Do **not** commit `local.properties`, `google-services.json`, or APKs.  
+All five Android apps have verified `assembleDebug` success on this portfolio’s CI workstation snapshot (Nov 2026).
+
+See [Android/README.md](Android/README.md) for the Android matrix and Firebase enable steps.
 
 ---
 
-## Per-app deep dives
+## What each app proves in an interview
 
-Each app folder has its own `README.md` covering features, architecture, run steps, and known limitations (signing, CloudKit, widgets).
+Use these as talking-point anchors (expand with code walkthroughs):
+
+| App | Prove you can… |
+|-----|----------------|
+| **Focus Timer** | Ship background-adjacent UX: timers, notifications, App Group / widget timelines, Live Activity or Glance updates without blocking the UI thread. |
+| **Spot Journal** | Combine media + location + persistence; explain permission flows, map choice (MapKit vs OSM), and photo storage strategy. |
+| **Pulse Weather** | Own a networking stack: decode, caching, offline UX, units, and graceful API failure — with zero secret keys. |
+| **Ledger Lite** | Model structured domain data (categories, filters, aggregates), charts, and CSV export / share. |
+| **Sync Notes** | Design sync as a *layer*: local-first, conflict policy, cloud optional — defend CloudKit vs Firestore tradeoffs for JP product contexts. |
+
+Deeper bullets live in each app’s README (`Interview talking points` sections on iOS).
+
+---
+
+## Honest limitations
+
+| Topic | Reality |
+|-------|---------|
+| **iOS build verification** | Sources + `project.yml` are complete; full Xcode compile/sign happens on a Mac with your Team ID. |
+| **Android build verification** | `assembleDebug` succeeded for all five (Nov 2026). Emulator/device UX still needs human QA screenshots. |
+| **App icons** | Asset catalogs / mipmaps exist; replace placeholders with final PNGs before March 2027 freeze. |
+| **Widgets / Live Activities** | Need correct signing, App Groups, and (for Live Activities) capable hardware. |
+| **CloudKit (Sync Notes iOS)** | Requires Apple Developer Program + iCloud container. Local fallback is the default demo path. |
+| **Firebase (Sync Notes Android)** | Off by default. Enabling needs your own Firebase project + `google-services.json` (never commit secrets). |
+| **Screenshots** | Folders under [`docs/screenshots/`](docs/screenshots/) are ready; drop device PNGs before applications. |
+| **Tests / CI** | Roadmap items for Nov–Dec 2026 — not yet the primary signal of this repo. |
+
+---
+
+## Roadmap & weekly improvement
+
+**Path:** November 2026 → March 2027 readiness → May 2027 applications.
+
+| Phase | Theme |
+|-------|--------|
+| Nov–Dec 2026 | Harden the existing five (tests, CI, a11y, error states, icons) |
+| Jan 2027 | Networking / offline / sync depth; optional 6th sophisticated app |
+| Feb 2027 | Polish, instrumentation, performance, bilingual docs, sample interview Q&A |
+| Mar 2027 | Feature freeze, screenshots, release notes, readiness checklist |
+
+Full plan with concrete work items: **[ROADMAP.md](ROADMAP.md)**.
+
+A recurring routine drives weekly commits (tests, polish, or a sophistication slice) so the repo keeps looking like active, experienced ownership — not a one-shot dump.
+
+---
+
+## Repository layout
 
 ```
-Apps/                 # iOS (SwiftUI) — XcodeGen project.yml per app
+Apps/                 # iOS SwiftUI — XcodeGen project.yml per app
   FocusTimer/
   SpotJournal/
   PulseWeather/
   LedgerLite/
   SyncNotes/
-Android/              # Android (Compose) — standalone Gradle projects
+Android/              # Android Compose — standalone Gradle projects
   FocusTimer/
   SpotJournal/
   PulseWeather/
@@ -84,53 +226,22 @@ Android/              # Android (Compose) — standalone Gradle projects
   SyncNotes/
 docs/
   architecture.md
+  screenshots/        # per-app folders for PNGs
+ROADMAP.md            # Nov 2026 → Mar 2027 plan
+README.md             # this file
+LICENSE
 ```
 
 ---
 
+## License & contact
 
-## Android apps
+MIT — see [LICENSE](LICENSE). Code may be referenced in portfolios and interviews.
 
-Kotlin + Jetpack Compose counterparts live under [`Android/`](Android/). Each app is a standalone Gradle project:
-
-| App | Open in Android Studio |
-|-----|------------------------|
-| **Focus Timer** | `Android/FocusTimer` |
-| **Spot Journal** | `Android/SpotJournal` |
-| **Pulse Weather** | `Android/PulseWeather` |
-| **Ledger Lite** | `Android/LedgerLite` |
-| **Sync Notes** | `Android/SyncNotes` |
-
-```bash
-cd Android/FocusTimer
-./gradlew :app:assembleDebug
-```
-
-See [Android/README.md](Android/README.md) for the Android tech matrix and Firebase enable steps (Sync Notes).
-
----
-## Design principles
-
-- **MVVM** with observable view models (`@Observable` / `ObservableObject` as appropriate).
-- Real persistence and real networking — no stub “TODO” screens.
-- Explicit loading, empty, and error states.
-- Privacy usage strings in every `Info.plist` that needs them.
-- No API secrets. Weather uses [Open-Meteo](https://open-meteo.com/) (free, no key).
+**Author:** Jian Wang  
+**GitHub:** [wjdartmouth](https://github.com/wjdartmouth)  
+**Contact:** _(add preferred email / LinkedIn before applications)_
 
 ---
 
-## Limitations (honest)
-
-| Topic | Note |
-|-------|------|
-| Widgets / Live Activities | Require Xcode 15+ on macOS; build the Widget extension target alongside the app. |
-| CloudKit (Sync Notes) | Needs an Apple Developer team + iCloud capability. Local fallback works without it. |
-| Signing | Set your Team ID in Xcode Signing & Capabilities before running on device. |
-| Xcode project files | Generated via XcodeGen (`project.yml`). Run `xcodegen generate` on Mac. |
-| Screenshots | Placeholder sections in each README — drop PNGs into `docs/screenshots/` when ready. |
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE). Use freely in portfolios and interviews.
+*Last documentation pass: November 2026 · Target readiness: March 2027*
