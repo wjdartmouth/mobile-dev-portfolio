@@ -30,7 +30,9 @@ Part of a mid-level Japan hiring portfolio — readiness target **March 2027**. 
 | CSV share | | | | ✅ | |
 | Optional Firestore | | | | | ✅ |
 
-Planned hardening (WorkManager, UI tests, CI matrix, JA strings): [ROADMAP.md](../ROADMAP.md).
+CI: GitHub Actions [`.github/workflows/android.yml`](../.github/workflows/android.yml) runs `assembleDebug` and `testDebugUnitTest` for every app. Domain unit tests cover Focus Timer, Pulse Weather, Ledger Lite, and Sync Notes. Spot Journal’s test task is empty on purpose. Commands: [docs/testing.md](../docs/testing.md).
+
+Still planned (WorkManager, UI tests, JA strings): [ROADMAP.md](../ROADMAP.md).
 
 ## Requirements
 
@@ -43,7 +45,7 @@ Planned hardening (WorkManager, UI tests, CI matrix, JA strings): [ROADMAP.md](.
 
 ```bash
 cd Android/FocusTimer   # or SpotJournal / PulseWeather / LedgerLite / SyncNotes
-./gradlew :app:assembleDebug
+./gradlew :app:assembleDebug :app:testDebugUnitTest
 ```
 
 APK output: `app/build/outputs/apk/debug/app-debug.apk`

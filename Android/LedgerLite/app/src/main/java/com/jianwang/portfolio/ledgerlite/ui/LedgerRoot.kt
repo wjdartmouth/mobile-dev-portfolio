@@ -54,6 +54,8 @@ import androidx.navigation.compose.rememberNavController
 import com.jianwang.portfolio.ledgerlite.data.CsvExporter
 import com.jianwang.portfolio.ledgerlite.data.Expense
 import com.jianwang.portfolio.ledgerlite.data.ExpenseCategory
+import com.jianwang.portfolio.ledgerlite.data.toLedgerLine
+import com.jianwang.portfolio.ledgerlite.domain.LedgerAnalytics
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Currency
@@ -102,9 +104,10 @@ private fun HomeScreen(
     onAdd: () -> Unit,
     onShare: () -> Unit
 ) {
-    val total = expenses.sumOf { it.amountCents }
-    val byCat = remember(expenses) {
-        expenses.groupBy { it.category }.mapValues { (_, v) -> v.sumOf { it.amountCents } }
+    val lines = remember(expenses) { expenses.map { it.toLedgerLine() } }
+    val total = LedgerAnalytics.totalCents(lines)
+    val byCat = remember(lines) {
+        LedgerAnalytics.categoryTotals(lines).associate { it.category to it.totalCents }
     }
     Scaffold(
         topBar = {

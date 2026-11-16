@@ -1,5 +1,7 @@
 package com.jianwang.portfolio.syncnotes.data
 
+import com.jianwang.portfolio.syncnotes.domain.NoteConflictPolicy
+import com.jianwang.portfolio.syncnotes.domain.NoteVersion
 import com.jianwang.portfolio.syncnotes.sync.AccountSyncStatus
 import com.jianwang.portfolio.syncnotes.sync.NoteSyncing
 import com.jianwang.portfolio.syncnotes.sync.RemoteNote
@@ -64,9 +66,11 @@ class NoteRepository(
         val remote = sync.fetchChanges(lastSyncAt)
         remote.forEach { r ->
             val local = dao.get(r.id)
-            if (local == null || r.revision > local.revision ||
-                (r.revision == local.revision && r.updatedAt > local.updatedAt)
-            ) {
+            val preferRemote = NoteConflictPolicy.shouldPreferRemote(
+                local = local?.let { NoteVersion(it.revision, it.updatedAt, it.isDeleted) },
+                remote = NoteVersion(r.revision, r.updatedAt, r.isDeleted)
+            )
+            if (preferRemote) {
                 dao.upsert(
                     NoteEntity(
                         id = r.id,

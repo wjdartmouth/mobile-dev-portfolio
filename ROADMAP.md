@@ -7,14 +7,20 @@
 
 This roadmap turns the current five paired apps (iOS + Android) into work that reads as **experienced mid-level ownership**: tests, CI, accessibility, offline/sync depth, localization, performance, and polished bilingual docs.
 
+## Progress
+
+- **16 Nov 2026 (Week A — Quality):** Extracted pure domain policies for the focus cycle, Open-Meteo decode, ledger filter/totals/CSV, and note last-write-wins on iOS and Android. XCTest and JUnit cover Focus Timer, Pulse Weather, Ledger Lite, and Sync Notes. GitHub Actions runs `assembleDebug` and `testDebugUnitTest` for all five Android apps. iOS CI is still a Mac-local `xcodebuild test` (no macOS workflow yet). Icons, JA strings, WorkManager, UI tests, and a 6th app are unchanged.
+
 ---
 
 ## Success criteria (March 2027 checklist)
 
 - [ ] All five iOS apps open via XcodeGen, build, and run on simulator with your Team
 - [ ] All five Android apps `assembleDebug` (and preferably `assembleRelease` unsigned) green in CI
-- [ ] Unit tests for ViewModels / services on both platforms for ≥3 apps; UI smoke tests for ≥2
-- [ ] GitHub Actions: iOS (macOS runner or documented Mac workflow) + Android Gradle CI
+- [x] Unit tests for domain logic on both platforms for 4 apps (Focus Timer, Pulse Weather, Ledger Lite, Sync Notes)
+- [ ] UI smoke tests for ≥2 apps
+- [x] GitHub Actions: Android Gradle CI (`assembleDebug` + unit tests, all five apps)
+- [ ] GitHub Actions: iOS (macOS runner)
 - [ ] Real app icons + store-quality screenshots in `docs/screenshots/`
 - [ ] Japanese + English strings for primary flows (or clear EN-only with JA hiring docs)
 - [ ] Accessibility pass (VoiceOver / TalkBack labels, Dynamic Type / font scale)
@@ -165,8 +171,8 @@ If a week slips, prefer closing a quality debt over starting a new feature.
 - Optional Firestore (Android Sync Notes)
 
 ### High value next
-- [ ] GitHub Actions Android matrix  
-- [ ] XCTest / JUnit for domain logic  
+- [x] GitHub Actions Android matrix (16 Nov 2026)
+- [x] XCTest / JUnit for domain logic (16 Nov 2026; four apps, not UI tests)
 - [ ] Compose UI tests / XCUITest smoke  
 - [ ] WorkManager scheduled refresh  
 - [ ] Japanese `strings.xml` / `Localizable.xcstrings`  

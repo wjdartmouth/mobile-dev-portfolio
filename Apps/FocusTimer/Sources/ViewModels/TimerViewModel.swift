@@ -115,18 +115,11 @@ final class TimerViewModel {
     }
 
     private func advancePhase() {
-        let next: TimerPhase
-        switch phase {
-        case .focus:
-            if completedFocusCount > 0,
-               completedFocusCount % settings.sessionsUntilLongBreak == 0 {
-                next = .longBreak
-            } else {
-                next = .shortBreak
-            }
-        case .shortBreak, .longBreak:
-            next = .focus
-        }
+        let next = FocusCyclePolicy.nextPhase(
+            after: phase,
+            completedFocusCount: completedFocusCount,
+            sessionsUntilLongBreak: settings.sessionsUntilLongBreak
+        )
 
         let auto: Bool
         switch next {

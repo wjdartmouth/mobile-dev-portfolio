@@ -18,5 +18,7 @@ Notes app with **Room always on**, last-write-wins by revision, and an optional 
 5. Conflict policy: higher `revision` wins; if equal, higher `updatedAt` wins.
 
 ```bash
-cd Android/SyncNotes && ./gradlew :app:assembleDebug
+cd Android/SyncNotes && ./gradlew :app:assembleDebug :app:testDebugUnitTest
 ```
+
+`NoteConflictPolicy` is what `NoteRepository.syncNow()` calls: no local note, or a higher revision, or the same revision with a later `updatedAt`. A deleted remote is applied only when that comparison wins.

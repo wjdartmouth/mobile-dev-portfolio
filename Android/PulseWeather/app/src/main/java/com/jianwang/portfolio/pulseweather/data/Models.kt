@@ -38,7 +38,8 @@ data class CurrentWeather(
 data class HourlyBlock(
     val time: List<String> = emptyList(),
     @SerialName("temperature_2m") val temperature2m: List<Double> = emptyList(),
-    @SerialName("weathercode") val weathercode: List<Int> = emptyList()
+    @SerialName("weathercode") val weathercode: List<Int> = emptyList(),
+    @SerialName("precipitation_probability") val precipitationProbability: List<Int>? = null
 )
 
 @Serializable
@@ -78,5 +79,5 @@ fun weatherLabel(code: Int): String = when (code) {
     71, 73, 75 -> "Snow"
     80, 81, 82 -> "Showers"
     95, 96, 99 -> "Thunderstorm"
-    else -> "Weather"
+    else -> "Unknown"
 }

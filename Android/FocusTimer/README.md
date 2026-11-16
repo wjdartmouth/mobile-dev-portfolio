@@ -14,7 +14,9 @@ Android Studio → **Open** → `Android/FocusTimer`
 
 ```bash
 cd Android/FocusTimer
-./gradlew :app:assembleDebug
+./gradlew :app:assembleDebug :app:testDebugUnitTest
 ```
+
+JVM tests cover `FocusCyclePolicy` and `TimerMath` (cadence, zero minutes, `65` → `1:05`, `3660` → `1h 01m`). The unused WorkManager dependency is unchanged.
 
 Requires JDK 17 and Android SDK 34.
