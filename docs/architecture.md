@@ -10,6 +10,7 @@ All five iOS apps follow the same shape:
 ```
 Sources/
   App/           # @main entry, root scene, dependency wiring
+  Domain/        # pure policies (timer, ledger, note merge) — no SwiftData
   Models/        # Codable / @Model types
   Services/      # persistence, networking, notifications, location
   ViewModels/    # @Observable / ObservableObject
@@ -57,10 +58,22 @@ Each Android app is a **standalone Gradle project** (not a single multi-module m
 
 ## Testing mindset (interview talking point)
 
-Services should stay protocol- / interface-backed (`WeatherServing`, `NoteSyncing`, `LocationProviding`, repositories) so fakes inject cleanly in previews and unit tests. Roadmap Phase 1 turns this into real XCTest / JUnit coverage.
+Services stay protocol- / interface-backed (`WeatherServing`, `NoteSyncing`, `LocationProviding`, repositories) so fakes inject cleanly in previews and later UI tests.
+
+The rules unit tests actually call are pure and free of SwiftData, Room, and view types:
+
+| Policy | What it owns |
+|--------|----------------|
+| `FocusCyclePolicy` / `TimerMath` | Next phase after focus or break, minute-to-second durations, duration copy |
+| `OpenMeteoDecoding` | Forecast and geocoding JSON, including missing optional fields |
+| `LedgerAnalytics` / `LedgerCSV` | Date or category filters, search, totals, category buckets, CSV text |
+| `NoteConflictPolicy` | Last-write-wins by revision, then `updatedAt` (deletion does not outrank that order) |
+
+View models and repositories call those types instead of keeping a second copy of the rule. XCTest targets are logic tests (no host app, so Focus Timer’s widget extension is not required to run them). Android tests are local JVM tests. Commands: [testing.md](testing.md).
 
 ## Related
 
 - Root [README.md](../README.md)
+- [testing.md](testing.md)
 - [Android/README.md](../Android/README.md)
 - Per-app READMEs under `Apps/*` and `Android/*`

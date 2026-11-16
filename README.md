@@ -1,5 +1,7 @@
 # Mobile Development Portfolio
 
+[![Android CI](https://github.com/wjdartmouth/mobile-dev-portfolio/actions/workflows/android.yml/badge.svg)](https://github.com/wjdartmouth/mobile-dev-portfolio/actions/workflows/android.yml)
+
 **Author:** Jian Wang  
 **Goal:** Mid-level mobile developer roles in Japan (applications from ~May 2027)  
 **Readiness target:** Interview-ready by **March 2027**  
@@ -19,6 +21,7 @@ Five production-shaped apps, each implemented on **iOS (SwiftUI)** and **Android
 | **構成** | 同一コンセプトのアプリを **iOS 5本 + Android 5本**（計10プロジェクト） |
 | **技術** | iOS: Swift / SwiftUI / SwiftData / WidgetKit など · Android: Kotlin / Compose / Room / Glance など |
 | **方針** | デモ止まりではなく、永続化・同期・オフライン・アクセシビリティ・テスト／CI まで段階的に厚くする |
+| **テスト / CI** | 2026-11-16 にドメイン単体テストと Android CI を開始 |
 | **ロードマップ** | 詳細は [ROADMAP.md](ROADMAP.md)（2026年11月 → 2027年3月） |
 
 コードをそのままクローンして Xcode / Android Studio で動かせます。CloudKit・Firebase・実機署名など環境依存の部分は各 README に正直に書いてあります。
@@ -80,6 +83,7 @@ Per-app feature READMEs live next to the source (both platforms).
 | CSV / share sheet export | | | | ✅ | |
 | CloudKit sync layer | | | | | ✅ |
 | Accessibility + Dark Mode | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Unit tests (domain) | ✅ cycle + duration | | ✅ Open-Meteo decode | ✅ filter, totals, CSV | ✅ last-write-wins |
 
 ### Android (Kotlin · Jetpack Compose · minSdk 26 · targetSdk 34)
 
@@ -96,6 +100,7 @@ Per-app feature READMEs live next to the source (both platforms).
 | CSV share via Intent | | | | ✅ | |
 | Optional Firestore sync | | | | | ✅ (off by default) |
 | Material 3 + contentDescriptions | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Unit tests (domain, JVM) | ✅ cycle + duration | | ✅ Open-Meteo decode | ✅ filter, totals, CSV | ✅ last-write-wins |
 
 Cross-cutting details: [docs/architecture.md](docs/architecture.md).
 
@@ -121,6 +126,8 @@ App entry → ViewModels → Services (protocols) → Persistence / Network
 | DI / testability | Protocol-backed services for fakes & previews | Interfaces + ViewModel injection |
 
 Interview angle: explain *why* Pulse Weather uses a file cache instead of SwiftData/Room, and *why* Sync Notes stays usable with cloud disabled.
+
+Domain rules that hiring loops like to probe now have direct tests on both platforms: Focus Timer’s phase cycle and duration formatting, Pulse Weather’s Open-Meteo decoding and WMO copy, Ledger Lite’s filters / totals / category buckets / CSV, and Sync Notes’ revision-then-`updatedAt` merge. Commands are in [docs/testing.md](docs/testing.md). Android CI runs `assembleDebug` and those unit tests for all five apps.
 
 ---
 
@@ -188,7 +195,7 @@ Deeper bullets live in each app’s README (`Interview talking points` sections 
 | **CloudKit (Sync Notes iOS)** | Requires Apple Developer Program + iCloud container. Local fallback is the default demo path. |
 | **Firebase (Sync Notes Android)** | Off by default. Enabling needs your own Firebase project + `google-services.json` (never commit secrets). |
 | **Screenshots** | Folders under [`docs/screenshots/`](docs/screenshots/) are ready; drop device PNGs before applications. |
-| **Tests / CI** | Roadmap items for Nov–Dec 2026 — not yet the primary signal of this repo. |
+| **Tests / CI** | Started 16 Nov 2026. Android GitHub Actions runs `assembleDebug` + `testDebugUnitTest` for all five apps. XCTest and JUnit cover domain logic for Focus Timer, Pulse Weather, Ledger Lite, and Sync Notes. Spot Journal is assemble-only (no pure domain suite yet). iOS tests are logic tests with no host app and no widget, and they are **not** on a macOS runner yet — run them on a Mac (see [docs/testing.md](docs/testing.md)). An iOS workflow was left out on purpose so CI is not red by default; it needs a later hardening pass. iOS compile still needs a Mac and a Team ID. |
 
 ---
 
@@ -206,6 +213,8 @@ Deeper bullets live in each app’s README (`Interview talking points` sections 
 Full plan with concrete work items: **[ROADMAP.md](ROADMAP.md)**.
 
 A recurring routine drives weekly commits (tests, polish, or a sophistication slice) so the repo keeps looking like active, experienced ownership — not a one-shot dump.
+
+**16 Nov 2026 (Asia/Hong_Kong), Week A — Quality:** domain policies extracted for the timer, weather decode, ledger aggregates, and note merge; unit tests on iOS and Android for those four apps; Android CI matrix for all five. Icons, Japanese strings, WorkManager, UI tests, and a sixth app were not part of this pass. How the repo is worked: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -226,7 +235,10 @@ Android/              # Android Compose — standalone Gradle projects
   SyncNotes/
 docs/
   architecture.md
+  testing.md          # how to run XCTest and Gradle unit tests
   screenshots/        # per-app folders for PNGs
+.github/workflows/    # Android CI (assembleDebug + unit tests)
+CONTRIBUTING.md       # layout, generate, test, what not to commit
 ROADMAP.md            # Nov 2026 → Mar 2027 plan
 README.md             # this file
 LICENSE
@@ -244,4 +256,4 @@ MIT — see [LICENSE](LICENSE). Code may be referenced in portfolios and intervi
 
 ---
 
-*Last documentation pass: November 2026 · Target readiness: March 2027*
+*Last documentation pass: 16 November 2026 (Asia/Hong_Kong) · Target readiness: March 2027*

@@ -120,7 +120,18 @@ final class NoteRepository {
             let existing = try? context.fetch(descriptor).first
 
             if let existing {
-                if shouldPreferRemote(payload, over: existing) {
+                if NoteConflictPolicy.shouldPreferRemote(
+                    NoteVersion(
+                        revision: payload.revision,
+                        updatedAt: payload.updatedAt,
+                        isDeleted: payload.isDeleted
+                    ),
+                    over: NoteVersion(
+                        revision: existing.revision,
+                        updatedAt: existing.updatedAt,
+                        isDeleted: existing.isDeleted
+                    )
+                ) {
                     apply(payload, to: existing)
                     if payload.isDeleted {
                         context.delete(existing)
@@ -137,13 +148,6 @@ final class NoteRepository {
             }
         }
         try? context.save()
-    }
-
-    private func shouldPreferRemote(_ remote: CloudNotePayload, over local: Note) -> Bool {
-        if remote.revision != local.revision {
-            return remote.revision > local.revision
-        }
-        return remote.updatedAt > local.updatedAt
     }
 
     private func apply(_ payload: CloudNotePayload, to note: Note) {

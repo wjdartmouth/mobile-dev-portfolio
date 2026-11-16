@@ -1,0 +1,9 @@
+{
+  "latitude": 35.0,
+  "longitude": 139.0,
+  "hourly": {
+    "time": ["2026-11-16T10:00"],
+    "temperature_2m": [10.0],
+    "weathercode": [0]
+  }
+}

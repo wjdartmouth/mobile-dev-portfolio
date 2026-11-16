@@ -22,13 +22,6 @@ enum Formatters {
     }()
 
     static func duration(seconds: Int) -> String {
-        let m = seconds / 60
-        let s = seconds % 60
-        if m >= 60 {
-            let h = m / 60
-            let rm = m % 60
-            return String(format: "%dh %02dm", h, rm)
-        }
-        return String(format: "%d:%02d", m, s)
+        TimerMath.duration(seconds: seconds)
     }
 }

@@ -55,6 +55,16 @@ Live Activities need a physical device (or a simulator with Dynamic Island).
 - `TimelineProvider` refresh policy vs Live Activity push-less updates
 - SwiftData predicates for “today’s completed focus sessions”
 - Clean separation of timer ticking (`Task` loop) from UI
+- `FocusCyclePolicy` / `TimerMath` are pure; XCTest covers cadence and duration formatting without launching the widget
+
+## Tests
+
+```bash
+xcodegen generate
+xcodebuild test -scheme FocusTimer -destination 'platform=iOS Simulator,name=iPhone 16' CODE_SIGNING_ALLOWED=NO
+```
+
+The test bundle compiles `Sources/Domain` and `TimerPhase` only. It does not host the app. See [docs/testing.md](../../docs/testing.md).
 
 ## Screenshots
 

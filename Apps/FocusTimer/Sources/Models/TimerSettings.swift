@@ -52,11 +52,12 @@ final class TimerSettings {
     }
 
     func seconds(for phase: TimerPhase) -> Int {
-        switch phase {
-        case .focus: return focusMinutes * 60
-        case .shortBreak: return shortBreakMinutes * 60
-        case .longBreak: return longBreakMinutes * 60
-        }
+        TimerMath.seconds(
+            for: phase,
+            focusMinutes: focusMinutes,
+            shortBreakMinutes: shortBreakMinutes,
+            longBreakMinutes: longBreakMinutes
+        )
     }
 
     func resetToDefaults() {

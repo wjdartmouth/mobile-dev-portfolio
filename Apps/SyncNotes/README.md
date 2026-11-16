@@ -61,7 +61,10 @@ brew install xcodegen
 cd Apps/SyncNotes
 xcodegen generate
 open SyncNotes.xcodeproj
+xcodebuild test -scheme SyncNotes -destination 'platform=iOS Simulator,name=iPhone 16' CODE_SIGNING_ALLOWED=NO
 ```
+
+`NoteConflictPolicy.shouldPreferRemote` is the last-write-wins rule the repository calls. XCTest covers equal-revision older remotes and deleted remotes that win on revision.
 
 ## Screenshots
 

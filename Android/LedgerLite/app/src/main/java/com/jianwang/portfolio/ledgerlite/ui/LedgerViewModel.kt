@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.jianwang.portfolio.ledgerlite.LedgerLiteApp
 import com.jianwang.portfolio.ledgerlite.data.Expense
 import com.jianwang.portfolio.ledgerlite.data.ExpenseCategory
+import com.jianwang.portfolio.ledgerlite.data.toLedgerLine
+import com.jianwang.portfolio.ledgerlite.domain.LedgerAnalytics
 import java.util.UUID
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,11 +33,8 @@ class LedgerViewModel(app: Application) : AndroidViewModel(app) {
     val selectedCategory = categoryFilter.asStateFlow()
 
     val expenses = combine(dao.observeAll(), query, categoryFilter) { all, q, cat ->
-        all.filter { e ->
-            val matchesQ = q.isBlank() || e.title.contains(q, true) || e.note.contains(q, true) || e.category.contains(q, true)
-            val matchesC = cat == null || e.category == cat.name
-            matchesQ && matchesC
-        }
+        val kept = LedgerAnalytics.filter(all.map { it.toLedgerLine() }, q, cat?.name).map { it.id }.toSet()
+        all.filter { it.id in kept }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     private val _form = MutableStateFlow(FormState())
