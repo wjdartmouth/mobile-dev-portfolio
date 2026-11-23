@@ -59,11 +59,30 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.focustimer.widgets
         CODE_SIGN_ENTITLEMENTS: Resources/FocusTimerWidgets.entitlements
+  FocusTimerTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+      - path: Sources/Domain
+      - path: Shared/TimerPhase.swift
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.focustimer.tests
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGN_IDENTITY: ""
 schemes:
   FocusTimer:
     build:
       targets:
-        FocusTimer: all
-        FocusTimerWidgets: all
+        FocusTimer: [run, profile, analyze, archive]
+        FocusTimerWidgets: [run, profile, analyze, archive]
+        FocusTimerTests: [test]
     run:
       config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: FocusTimerTests

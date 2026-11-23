@@ -12,6 +12,8 @@ import com.jianwang.portfolio.focustimer.FocusTimerApp
 import com.jianwang.portfolio.focustimer.data.FocusSession
 import com.jianwang.portfolio.focustimer.data.TimerPhase
 import com.jianwang.portfolio.focustimer.data.TimerSettings
+import com.jianwang.portfolio.focustimer.domain.FocusCyclePolicy
+import com.jianwang.portfolio.focustimer.domain.TimerMath
 import com.jianwang.portfolio.focustimer.service.NotificationHelper
 import com.jianwang.portfolio.focustimer.widget.FocusTimerWidget
 import com.jianwang.portfolio.focustimer.widget.WidgetStateHolder
@@ -36,7 +38,7 @@ data class TimerUiState(
     val progress: Float
         get() = if (totalSeconds == 0) 0f else 1f - remainingSeconds.toFloat() / totalSeconds
     val timeDisplay: String
-        get() = "%02d:%02d".format(remainingSeconds / 60, remainingSeconds % 60)
+        get() = TimerMath.clockDisplay(remainingSeconds)
 }
 
 class TimerViewModel(app: Application) : AndroidViewModel(app) {
@@ -163,20 +165,11 @@ class TimerViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private fun nextPhase(current: TimerPhase, focusDone: Int, settings: TimerSettings): TimerPhase {
-        return when (current) {
-            TimerPhase.FOCUS -> {
-                if (focusDone > 0 && focusDone % settings.sessionsUntilLongBreak == 0)
-                    TimerPhase.LONG_BREAK else TimerPhase.SHORT_BREAK
-            }
-            TimerPhase.SHORT_BREAK, TimerPhase.LONG_BREAK -> TimerPhase.FOCUS
-        }
+        return FocusCyclePolicy.nextPhase(current, focusDone, settings.sessionsUntilLongBreak)
     }
 
-    private fun secondsFor(phase: TimerPhase, settings: TimerSettings): Int = when (phase) {
-        TimerPhase.FOCUS -> settings.focusMinutes * 60
-        TimerPhase.SHORT_BREAK -> settings.shortBreakMinutes * 60
-        TimerPhase.LONG_BREAK -> settings.longBreakMinutes * 60
-    }
+    private fun secondsFor(phase: TimerPhase, settings: TimerSettings): Int =
+        TimerMath.secondsFor(phase, settings.focusMinutes, settings.shortBreakMinutes, settings.longBreakMinutes)
 
     private fun vibrate() {
         val ctx = getApplication<Application>()

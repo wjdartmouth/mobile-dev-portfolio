@@ -30,8 +30,28 @@ targets:
         INFOPLIST_KEY_CFBundleDisplayName: Sync Notes
         CODE_SIGN_ENTITLEMENTS: Resources/SyncNotes.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  SyncNotesTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+      - path: Sources/Domain
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.syncnotes.tests
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGN_IDENTITY: ""
 schemes:
   SyncNotes:
     build:
       targets:
-        SyncNotes: all
+        SyncNotes: [run, profile, analyze, archive]
+        SyncNotesTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: SyncNotesTests

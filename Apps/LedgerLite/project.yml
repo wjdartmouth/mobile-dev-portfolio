@@ -28,8 +28,28 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.ledgerlite
         INFOPLIST_KEY_CFBundleDisplayName: Ledger Lite
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  LedgerLiteTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+      - path: Sources/Domain
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.ledgerlite.tests
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGN_IDENTITY: ""
 schemes:
   LedgerLite:
     build:
       targets:
-        LedgerLite: all
+        LedgerLite: [run, profile, analyze, archive]
+        LedgerLiteTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: LedgerLiteTests

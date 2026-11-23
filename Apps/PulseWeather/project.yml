@@ -28,8 +28,32 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.pulseweather
         INFOPLIST_KEY_CFBundleDisplayName: Pulse Weather
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  PulseWeatherTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+        excludes:
+          - Fixtures/**
+      - path: Sources/Models/WeatherModels.swift
+      - path: Sources/Utilities/WeatherCode.swift
+      - path: Sources/Services/OpenMeteoDecoding.swift
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.jianwang.portfolio.pulseweather.tests
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGN_IDENTITY: ""
 schemes:
   PulseWeather:
     build:
       targets:
-        PulseWeather: all
+        PulseWeather: [run, profile, analyze, archive]
+        PulseWeatherTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - name: PulseWeatherTests

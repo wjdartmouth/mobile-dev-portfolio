@@ -36,7 +36,10 @@ brew install xcodegen
 cd Apps/LedgerLite
 xcodegen generate
 open LedgerLite.xcodeproj
+xcodebuild test -scheme LedgerLite -destination 'platform=iOS Simulator,name=iPhone 16' CODE_SIGNING_ALLOWED=NO
 ```
+
+`LedgerAnalytics` / `LedgerCSV` own filter, totals, category buckets, and CSV quoting. The test target does not use SwiftData.
 
 ## Interview talking points
 

@@ -23,11 +23,9 @@ enum WeatherAPIError: LocalizedError {
 
 struct OpenMeteoClient: WeatherServing {
     private let session: URLSession
-    private let decoder: JSONDecoder
 
     init(session: URLSession = .shared) {
         self.session = session
-        self.decoder = JSONDecoder()
     }
 
     func searchCities(query: String) async throws -> [GeoResult] {
@@ -48,8 +46,7 @@ struct OpenMeteoClient: WeatherServing {
             throw WeatherAPIError.badResponse
         }
         do {
-            let decoded = try decoder.decode(GeoResponse.self, from: data)
-            return decoded.results ?? []
+            return try OpenMeteoDecoding.cities(from: data)
         } catch {
             throw WeatherAPIError.decoding
         }
@@ -73,27 +70,8 @@ struct OpenMeteoClient: WeatherServing {
             throw WeatherAPIError.badResponse
         }
 
-        struct Payload: Codable {
-            var latitude: Double
-            var longitude: Double
-            var timezone: String
-            var current: CurrentWeather
-            var hourly: HourlyWeather
-            var daily: DailyWeather
-        }
-
         do {
-            let payload = try decoder.decode(Payload.self, from: data)
-            return WeatherBundle(
-                latitude: payload.latitude,
-                longitude: payload.longitude,
-                timezone: payload.timezone,
-                current: payload.current,
-                hourly: payload.hourly,
-                daily: payload.daily,
-                fetchedAt: .now,
-                placeName: placeName
-            )
+            return try OpenMeteoDecoding.forecast(from: data, placeName: placeName, fetchedAt: .now)
         } catch {
             throw WeatherAPIError.decoding
         }

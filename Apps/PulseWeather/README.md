@@ -23,7 +23,7 @@ Sources/
   Utilities/      WeatherCode → SF Symbol + copy
 ```
 
-Protocol-based `WeatherServing` makes the client swappable for tests/previews.
+Protocol-based `WeatherServing` makes the client swappable for tests/previews. `OpenMeteoDecoding` is the pure JSON boundary XCTest uses (forecast, geocoding, missing optionals, WMO copy).
 
 ## Requirements
 
@@ -38,6 +38,7 @@ brew install xcodegen
 cd Apps/PulseWeather
 xcodegen generate
 open PulseWeather.xcodeproj
+xcodebuild test -scheme PulseWeather -destination 'platform=iOS Simulator,name=iPhone 16' CODE_SIGNING_ALLOWED=NO
 ```
 
 ## API
