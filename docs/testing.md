@@ -14,7 +14,7 @@ cd Android/SyncNotes && ./gradlew :app:assembleDebug :app:testDebugUnitTest
 cd Android/SpotJournal && ./gradlew :app:assembleDebug :app:testDebugUnitTest
 ```
 
-Reports land in `app/build/reports/tests/testDebugUnitTest/`. GitHub Actions (`.github/workflows/android.yml`) runs the same two tasks for every app on Ubuntu with Temurin 17.
+Reports land in `app/build/reports/tests/testDebugUnitTest/`. GitHub Actions (`.github/workflows/android.yml`) runs the same two tasks for every app on Ubuntu with Temurin 17. SDK setup uses `android-actions/setup-android@v4` and installs `platform-tools`, `platforms;android-34`, and `build-tools;34.0.0`. It does not request the removed `tools` package.
 
 What the tests lock in:
 

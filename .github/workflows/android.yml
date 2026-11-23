@@ -29,10 +29,12 @@ jobs:
           java-version: "17"
 
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install SDK 34
-        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
+        uses: android-actions/setup-android@v4
+        with:
+          # v3's default still requests the removed "tools" package and fails
+          # sdkmanager. v4 defaults to platform-tools and skips a bare "tools"
+          # request. Pin the compile SDK and build-tools this repo uses.
+          packages: platform-tools platforms;android-34 build-tools;34.0.0
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
